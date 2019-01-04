@@ -2,6 +2,7 @@ package io.github.xinyangpan.matcher.bo;
 
 import java.math.BigDecimal;
 
+import io.github.xinyangpan.matcher.enums.OrderType;
 import io.github.xinyangpan.matcher.enums.Side;
 import lombok.Data;
 import lombok.NonNull;
@@ -14,6 +15,7 @@ public class BookOrder {
 	// worst price for Market Order
 	private @NonNull BigDecimal price;
 	private @NonNull Side side;
+	private @NonNull OrderType orderType;
 	private @NonNull BigDecimal filledQuantity;
 	// 
 	private String symbol;
@@ -21,12 +23,12 @@ public class BookOrder {
 	private Integer brokerId;
 	private Long clientId;
 
-	public BookOrder(long id, @NonNull BigDecimal orderQuantity, @NonNull BigDecimal price, @NonNull Side side, @NonNull BigDecimal filledQuantity) {
-		super();
+	public BookOrder(long id, @NonNull BigDecimal orderQuantity, @NonNull BigDecimal price, @NonNull Side side, @NonNull OrderType orderType, @NonNull BigDecimal filledQuantity) {
 		this.id = id;
 		this.orderQuantity = orderQuantity;
 		this.price = price;
 		this.side = side;
+		this.orderType = orderType;
 		this.filledQuantity = filledQuantity;
 	}
 	

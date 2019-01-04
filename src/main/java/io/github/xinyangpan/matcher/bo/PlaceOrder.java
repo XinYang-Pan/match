@@ -96,7 +96,7 @@ public class PlaceOrder {
 		Assert.state(!this.completed, "Shall be uncompleted.");
 		Assert.state(orderQuantity.compareTo(filledQuantity) > 0, "orderQuantity should be greater than filledQuantity.");
 		// 
-		BookOrder bookOrder = new BookOrder(id, orderQuantity, price, side, filledQuantity);
+		BookOrder bookOrder = new BookOrder(id, orderQuantity, price, side, orderType, filledQuantity);
 		bookOrder.setSymbol(symbol);
 		bookOrder.setClientId(clientId);
 		bookOrder.setBrokerId(brokerId);
