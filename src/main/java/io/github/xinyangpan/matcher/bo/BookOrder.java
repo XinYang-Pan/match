@@ -15,6 +15,11 @@ public class BookOrder {
 	private @NonNull BigDecimal price;
 	private @NonNull Side side;
 	private @NonNull BigDecimal filledQuantity;
+	// 
+	private String symbol;
+	private String clientOrderId;
+	private Short brokerId;
+	private Long clientId;
 
 	public BookOrder(long id, @NonNull BigDecimal orderQuantity, @NonNull BigDecimal price, @NonNull Side side, @NonNull BigDecimal filledQuantity) {
 		super();

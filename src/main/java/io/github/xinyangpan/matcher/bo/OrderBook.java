@@ -3,9 +3,9 @@ package io.github.xinyangpan.matcher.bo;
 import java.math.BigDecimal;
 import java.util.Map.Entry;
 
-import io.github.xinyangpan.matcher.MatchUtils;
 import io.github.xinyangpan.matcher.enums.OrderType;
 import io.github.xinyangpan.matcher.enums.Side;
+import io.github.xinyangpan.matcher.util.MatchUtils;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,7 +30,7 @@ public class OrderBook {
 	}
 	
 	public BookOrder cancel(long orderId) {
-		BookOrder bookOrder = MatchUtils.orderIndex().get(orderId);
+		BookOrder bookOrder = MatchUtils.orderCache().findById(orderId);
 		if (bookOrder == null) {
 			log.info("BookOrder not found for orderId={}", orderId);
 			return null;

@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Objects;
 
-import io.github.xinyangpan.matcher.MatchUtils;
+import io.github.xinyangpan.matcher.util.MatchUtils;
 import lombok.Data;
 
 @Data

@@ -7,9 +7,9 @@ import java.util.List;
 
 import org.springframework.util.Assert;
 
-import io.github.xinyangpan.matcher.MatchUtils;
 import io.github.xinyangpan.matcher.enums.OrderType;
 import io.github.xinyangpan.matcher.enums.Side;
+import io.github.xinyangpan.matcher.util.MatchUtils;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +26,11 @@ public class PlaceOrder {
 	private BigDecimal amount; // Market BUY 可不空
 	private Side side;
 	private OrderType orderType;
+	// 
+	private String symbol;
+	private String clientOrderId;
+	private Short brokerId;
+	private Long clientId;
 	// 
 	private BigDecimal filledQuantity = BigDecimal.ZERO;
 	private boolean completed;
