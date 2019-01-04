@@ -16,5 +16,8 @@ public class OrderRequest {
 	private BigDecimal quantity;
 	private BigDecimal amount;
 	private BigDecimal price;
+	// 
+	private Integer brokerId;
+	private Long clientId;
 
 }

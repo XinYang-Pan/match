@@ -5,18 +5,24 @@ import java.util.Map.Entry;
 
 import io.github.xinyangpan.matcher.enums.OrderType;
 import io.github.xinyangpan.matcher.enums.Side;
-import io.github.xinyangpan.matcher.util.MatchUtils;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Data
 public class OrderBook {
+	private final OrderBookConfig orderBookConfig;
+	private final SideBook sellBook; // ask
+	private final SideBook buyBook; // bid
 
-	private SideBook sellBook = new SideBook(Side.SELL); // ask
-	private SideBook buyBook = new SideBook(Side.BUY); // bid
+	public OrderBook(OrderBookConfig orderBookConfig) {
+		this.orderBookConfig = orderBookConfig;
+		this.sellBook = new SideBook(Side.SELL, orderBookConfig);
+		this.buyBook = new SideBook(Side.BUY, orderBookConfig);
+	}
 
 	public void place(PlaceOrder placeOrder) {
+		placeOrder.setOrderBookConfig(orderBookConfig);
 		SideBook sideBook = this.otherSideBook(placeOrder.getSide());
 		sideBook.take(placeOrder);
 		if (placeOrder.isCompleted()) {
@@ -28,9 +34,9 @@ public class OrderBook {
 			sideBook.rest(placeOrder.buildBookOrder());
 		}
 	}
-	
+
 	public BookOrder cancel(long orderId) {
-		BookOrder bookOrder = MatchUtils.orderCache().findById(orderId);
+		BookOrder bookOrder = orderBookConfig.getOrderCache().findById(orderId);
 		if (bookOrder == null) {
 			log.info("BookOrder not found for orderId={}", orderId);
 			return null;
@@ -76,5 +82,5 @@ public class OrderBook {
 		sb.append("*************************");
 		return sb.toString();
 	}
-	
+
 }

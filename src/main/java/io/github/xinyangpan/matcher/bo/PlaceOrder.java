@@ -9,7 +9,6 @@ import org.springframework.util.Assert;
 
 import io.github.xinyangpan.matcher.enums.OrderType;
 import io.github.xinyangpan.matcher.enums.Side;
-import io.github.xinyangpan.matcher.util.MatchUtils;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +35,8 @@ public class PlaceOrder {
 	private boolean completed;
 	// Result
 	private final List<Execution> executions = new ArrayList<>();
-
+	private OrderBookConfig orderBookConfig;
+	
 	private BigDecimal getFillableQuantity(BigDecimal price) {
 		if (side == Side.SELL || orderType == OrderType.LIMIT) {
 			return orderQuantity.subtract(filledQuantity);
@@ -45,7 +45,7 @@ public class PlaceOrder {
 		if (amount == null) {
 			return orderQuantity.subtract(filledQuantity);
 		}
-		BigDecimal maxQuantity = this.amount.divide(price, MatchUtils.quantityScale(), RoundingMode.FLOOR);
+		BigDecimal maxQuantity = this.amount.divide(price, orderBookConfig.getQuantityScale(), RoundingMode.FLOOR);
 		return maxQuantity.subtract(filledQuantity);
 	}
 
@@ -80,7 +80,8 @@ public class PlaceOrder {
 		BigDecimal fillingQuantity = makerQuantity.min(takerQuantity);
 		this.filledQuantity = this.filledQuantity.add(fillingQuantity);
 		bookOrder.addFilledQuantity(fillingQuantity);
-		Execution execution = new Execution(price, fillingQuantity, bookOrder, this);
+		BigDecimal executedAmount = orderBookConfig.calculateAmount(price, fillingQuantity);
+		Execution execution = new Execution(price, fillingQuantity, executedAmount, bookOrder, this);
 		executions.add(execution);
 		// 
 		takerQuantity = this.getFillableQuantity(price);

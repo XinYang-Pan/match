@@ -1,13 +1,12 @@
 package io.github.xinyangpan.matcher;
 
-import static io.github.xinyangpan.matcher.OrderUtils.*;
+import static io.github.xinyangpan.matcher.OrderUtils.marketMargin;
 
 import org.junit.Test;
 
 import io.github.xinyangpan.matcher.bo.OrderBook;
 import io.github.xinyangpan.matcher.bo.PlaceOrder;
 import io.github.xinyangpan.matcher.enums.Side;
-import io.github.xinyangpan.matcher.util.MatchUtils;
 
 public class OrderBookMixTest {
 
@@ -22,7 +21,7 @@ public class OrderBookMixTest {
 		orderBook.place(placeOrder);
 		System.out.println(orderBook.toOrderBoardStr());
 		System.out.println(placeOrder);
-		System.out.println(MatchUtils.orderCache());
+		System.out.println(orderBook.getOrderBookConfig().getOrderCache());
 		orderBook.cancel(6);
 		System.out.println(orderBook.toOrderBoardStr());
 	}

@@ -8,7 +8,6 @@ import java.util.LinkedList;
 import com.google.common.base.Strings;
 
 import io.github.xinyangpan.matcher.enums.Side;
-import io.github.xinyangpan.matcher.util.MatchUtils;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
@@ -16,11 +15,13 @@ import lombok.extern.slf4j.Slf4j;
 @Data
 public class BookEntry {
 
-	protected final BigDecimal price;
-	protected final Deque<BookOrder> orders = new LinkedList<>();
-	
-	public BookEntry(BigDecimal price) {
+	private final BigDecimal price;
+	private final OrderBookConfig orderBookConfig;
+	private final Deque<BookOrder> orders = new LinkedList<>();
+
+	public BookEntry(BigDecimal price, OrderBookConfig orderBookConfig) {
 		this.price = price;
+		this.orderBookConfig = orderBookConfig;
 	}
 
 	public boolean isEmpty() {
@@ -35,7 +36,7 @@ public class BookEntry {
 			taker.match(bookOrder);
 			if (bookOrder.isDone()) {
 				it.remove();
-				BookOrder removed = MatchUtils.orderCache().removeById(bookOrder.getId());
+				BookOrder removed = orderBookConfig.getOrderCache().removeById(bookOrder.getId());
 				if (removed == null) {
 					log.warn("Removed null. ref={}", bookOrder);
 				}
@@ -50,7 +51,7 @@ public class BookEntry {
 	public void rest(BookOrder bookOrder) {
 		log.debug("Resting order {}", bookOrder);
 		orders.add(bookOrder);
-		MatchUtils.orderCache().put(bookOrder);
+		orderBookConfig.getOrderCache().put(bookOrder);
 		log.debug("Resting order over. this={}", this);
 	}
 
@@ -60,7 +61,7 @@ public class BookEntry {
 		if (!success) {
 			log.warn("BookOrder not found in orders. ref={}", bookOrder);
 		}
-		BookOrder removed = MatchUtils.orderCache().removeById(bookOrder.getId());
+		BookOrder removed = orderBookConfig.getOrderCache().removeById(bookOrder.getId());
 		if (removed == null) {
 			log.warn("Removed null. ref={}", bookOrder);
 		}
@@ -94,5 +95,5 @@ public class BookEntry {
 			throw new IllegalArgumentException(String.valueOf(side));
 		}
 	}
-	
+
 }

@@ -7,6 +7,7 @@ public class CancelRequest {
 
 	private String symbol;
 	private String clientOrderId;
+	private Integer brokerId;
 	private Long orderId;
 
 }

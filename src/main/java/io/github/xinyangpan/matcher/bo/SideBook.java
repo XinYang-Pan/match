@@ -15,9 +15,11 @@ import lombok.extern.slf4j.Slf4j;
 public class SideBook {
 	private final Side side;
 	private final NavigableMap<BigDecimal, BookEntry> entryMap;
+	private final OrderBookConfig orderBookConfig;
 
-	public SideBook(Side side) {
+	public SideBook(Side side, OrderBookConfig orderBookConfig) {
 		this.side = side;
+		this.orderBookConfig = orderBookConfig;
 		switch (side) {
 		case BUY:
 			entryMap = new TreeMap<>(Comparator.reverseOrder());
@@ -53,7 +55,7 @@ public class SideBook {
 	public void rest(BookOrder bookOrder) {
 		BookEntry bookEntry = entryMap.get(bookOrder.getPrice());
 		if (bookEntry == null) {
-			bookEntry = new BookEntry(bookOrder.getPrice());
+			bookEntry = new BookEntry(bookOrder.getPrice(), orderBookConfig);
 			entryMap.put(bookEntry.getPrice(), bookEntry);
 		}
 		bookEntry.rest(bookOrder);

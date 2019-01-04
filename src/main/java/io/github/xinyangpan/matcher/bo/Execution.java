@@ -1,10 +1,8 @@
 package io.github.xinyangpan.matcher.bo;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.Objects;
 
-import io.github.xinyangpan.matcher.util.MatchUtils;
 import lombok.Data;
 
 @Data
@@ -17,10 +15,10 @@ public class Execution {
 	private final BookOrder makerOrder;
 	private final PlaceOrder takerOrder;
 
-	public Execution(BigDecimal price, BigDecimal quantity, BookOrder makerOrder, PlaceOrder takerOrder) {
+	public Execution(BigDecimal price, BigDecimal quantity, BigDecimal amount, BookOrder makerOrder, PlaceOrder takerOrder) {
 		this.price = price;
 		this.quantity = quantity;
-		this.amount = this.price.multiply(this.quantity).setScale(MatchUtils.amountScale(), RoundingMode.DOWN);
+		this.amount = amount;
 		this.makerOrder = Objects.requireNonNull(makerOrder);
 		this.takerOrder = Objects.requireNonNull(takerOrder);
 		this.makerId = makerOrder.getId();
