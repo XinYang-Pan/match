@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class BrokerIdAndClientOrderId {
-	private final short brokerId;
+	private final int brokerId;
 	private final String clientOrderId;
 	
 }

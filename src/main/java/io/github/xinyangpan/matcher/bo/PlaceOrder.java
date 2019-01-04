@@ -29,7 +29,7 @@ public class PlaceOrder {
 	// 
 	private String symbol;
 	private String clientOrderId;
-	private Short brokerId;
+	private Integer brokerId;
 	private Long clientId;
 	// 
 	private BigDecimal filledQuantity = BigDecimal.ZERO;
@@ -96,7 +96,12 @@ public class PlaceOrder {
 		Assert.state(!this.completed, "Shall be uncompleted.");
 		Assert.state(orderQuantity.compareTo(filledQuantity) > 0, "orderQuantity should be greater than filledQuantity.");
 		// 
-		return new BookOrder(id, orderQuantity, price, side, filledQuantity);
+		BookOrder bookOrder = new BookOrder(id, orderQuantity, price, side, filledQuantity);
+		bookOrder.setSymbol(symbol);
+		bookOrder.setClientId(clientId);
+		bookOrder.setBrokerId(brokerId);
+		bookOrder.setClientOrderId(clientOrderId);
+		return bookOrder;
 	}
 
 }

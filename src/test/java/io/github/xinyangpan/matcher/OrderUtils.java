@@ -17,6 +17,8 @@ public class OrderUtils {
 		order.setOrderQuantity(new BigDecimal(String.valueOf(quantity)));
 		order.setPrice(new BigDecimal(String.valueOf(price)));
 		order.setSide(side);
+		order.setBrokerId(1);
+		order.setClientOrderId("oid-"+order.getId());
 		return order;
 	}
 
@@ -27,6 +29,8 @@ public class OrderUtils {
 		order.setOrderQuantity(new BigDecimal(String.valueOf(quantity)));
 		order.setPrice(new BigDecimal(String.valueOf(price)));
 		order.setSide(side);
+		order.setBrokerId(1);
+		order.setClientOrderId("oid-"+order.getId());
 		return order;
 	}
 
@@ -36,6 +40,8 @@ public class OrderUtils {
 		order.setOrderType(OrderType.MARKET);
 		order.setOrderQuantity(new BigDecimal(String.valueOf(quantity)));
 		order.setSide(side);
+		order.setBrokerId(1);
+		order.setClientOrderId("oid-"+order.getId());
 		return order;
 	}
 
@@ -45,6 +51,8 @@ public class OrderUtils {
 		order.setOrderType(OrderType.MARKET);
 		order.setAmount(new BigDecimal(String.valueOf(margin)));
 		order.setSide(side);
+		order.setBrokerId(1);
+		order.setClientOrderId("oid-"+order.getId());
 		return order;
 	}
 

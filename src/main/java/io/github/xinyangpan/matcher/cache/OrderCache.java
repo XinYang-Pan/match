@@ -36,12 +36,12 @@ public class OrderCache {
 		return idToEntity.get(id);
 	}
 
-	public Long getId(short brokerId, @NonNull String clientOrderId) {
+	public Long getId(int brokerId, @NonNull String clientOrderId) {
 		return index1.get(new BrokerIdAndClientOrderId(brokerId, clientOrderId));
 	}
 
 	private BrokerIdAndClientOrderId toBrokerIdAndClientOrderId(BookOrder bookOrder) {
-		Short brokerId = bookOrder.getBrokerId();
+		Integer brokerId = bookOrder.getBrokerId();
 		String clientOrderId = bookOrder.getClientOrderId();
 		if (brokerId != null && clientOrderId != null && !clientOrderId.isEmpty()) {
 			return new BrokerIdAndClientOrderId(brokerId, clientOrderId);
