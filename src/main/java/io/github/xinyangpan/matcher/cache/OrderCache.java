@@ -39,7 +39,7 @@ public class OrderCache {
 	public Long getId(short brokerId, @NonNull String clientOrderId) {
 		return index1.get(new BrokerIdAndClientOrderId(brokerId, clientOrderId));
 	}
-	
+
 	private BrokerIdAndClientOrderId toBrokerIdAndClientOrderId(BookOrder bookOrder) {
 		Short brokerId = bookOrder.getBrokerId();
 		String clientOrderId = bookOrder.getClientOrderId();
