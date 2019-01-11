@@ -91,11 +91,15 @@ public class PlaceOrder {
 			return;
 		}
 	}
-
+	
+	public boolean isRestable() {
+		return this.orderType == OrderType.LIMIT && // LIMIT ORDER
+			!this.completed &&                      // NOT COMPLETED  
+			orderQuantity.compareTo(filledQuantity) > 0; // ORDER QTY > FILLED QTY
+	}
+	
 	public BookOrder buildBookOrder() {
-		Assert.state(this.orderType == OrderType.LIMIT, "Must be limit order.");
-		Assert.state(!this.completed, "Shall be uncompleted.");
-		Assert.state(orderQuantity.compareTo(filledQuantity) > 0, "orderQuantity should be greater than filledQuantity.");
+		Assert.state(this.isRestable(), String.format("Not restable. ref=%s", this));
 		// 
 		BookOrder bookOrder = new BookOrder(id, orderQuantity, price, side, orderType, filledQuantity);
 		bookOrder.setSymbol(symbol);
